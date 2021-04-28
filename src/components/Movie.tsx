@@ -46,7 +46,7 @@ const Overview = styled.p`
 const Rating = styled.p`
 `
 
-export default function Movie( {movie}:MovieType ) {
+export default function Movie( {movie}:any ) {
 
     let poster_src = "https://image.tmdb.org/t/p/w185" + movie.poster_path 
     return (

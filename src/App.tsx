@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ThemeToggle from './components/ThemeToggle'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
-import { GlobalStyles } from './components/GlovalStyles' 
+import { GlobalStyles } from './components/GlobalStyles' 
 import { lightTheme, darkTheme } from './components/Theme'
 import styled from 'styled-components'
 import Movie from './components/Movie'
@@ -82,10 +82,19 @@ function App() {
   const themeToggler = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light')
   }
-  const [ movies, setMovies ] = useState()
+  const [ movies, setMovies ] = useState([])
   const [ selectedMovie, setSelectedMovie ] = useState({})
   const [ error, setError ] = useState()
   const HeaderBackgroundColor = theme === 'light' ? "#60A5FA" : "#1F2937"  
+
+  useEffect(()=> {
+    fetch("https://api.themoviedb.org/3/trending/all/day?api_key=a8e92388eb2945321442a186305056d9")
+      .then(res => res.json())
+      .then(
+        (result) => setMovies(result.results),
+        (error) => setError(error)
+      )
+  },[])
 
   function handleChange(event: React.FormEvent<HTMLInputElement>) {
     const searchTerm = event.currentTarget.value
@@ -112,7 +121,7 @@ function App() {
     overview: string,
   }
 
-  const moviesList = ( movies !== undefined ) ? 
+  const moviesList = movies ? 
     movies.map((movie:MovieType) => {
     let poster_src = "https://image.tmdb.org/t/p/w185" + movie.poster_path 
     return ( 
