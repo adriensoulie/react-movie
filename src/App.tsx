@@ -125,7 +125,7 @@ function App() {
     movies.map((movie:MovieType) => {
     let poster_src = "https://image.tmdb.org/t/p/w185" + movie.poster_path 
     return ( 
-      <Link to="/movie">
+      <Link key={movie.id} to="/movie">
         <Poster title={movie.title} onClick={()=>setSelectedMovie(movie)} key={movie.id} src={poster_src} alt={movie.title}/>
       </Link>
     )
