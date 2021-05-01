@@ -1,16 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-type MovieType = {
-    movie: {
-        id: number,
-        title: string,
-        vote_average: number,
-        poster_path: string,
-        overview: string,
-    }
-}
-
 const Container = styled.section`
     width: 100vw;
     display: flex;
@@ -44,20 +34,37 @@ const Title = styled.h1`
 const Overview = styled.p`
 `
 const Rating = styled.p`
-`
+` 
+
+function MovieTitle( {title} : {title: string}){
+    return <Title>{title}</Title>
+}
+
+function MovieOverView( {overview} : {overview: string}){
+    return <Overview>{overview}</Overview>
+}
+
+function MovieRating( {rating} : {rating: number|string}){
+    return <Rating>{rating}/10</Rating>
+}
+
+function MoviePoster( {url, alt}: {url: string, alt:string}){
+    return <Poster src={url} alt={alt}/>
+}
 
 export default function Movie( {movie}:any ) {
 
     let poster_src = "https://image.tmdb.org/t/p/w185" + movie.poster_path 
+
     return (
         <Container>
             <MovieCard>
                 <MovieInfos>
-                    <Title>{movie.title}</Title>
-                    <Overview>{movie.overview}</Overview>
-                    <Rating>{movie.vote_average}/10</Rating>
+                    <MovieTitle title={movie.title}/>
+                    <MovieOverView overview={movie.overview}/>
+                    <MovieRating rating={movie.vote_average}/>
                 </MovieInfos>
-                <Poster key={movie.id} src={poster_src} alt={movie.title}/>
+                <MoviePoster url={poster_src} alt={movie.title}/>
             </MovieCard>
         </Container>
     )

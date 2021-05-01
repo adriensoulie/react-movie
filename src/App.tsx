@@ -78,12 +78,12 @@ const Poster = styled.img`
 `
 
 function App() {
-  const [ theme, setTheme ] = useState('light')
+  const [ theme, setTheme ] = useState<string>('light')
   const themeToggler = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light')
   }
   const [ movies, setMovies ] = useState([])
-  const [ selectedMovie, setSelectedMovie ] = useState({})
+  const [ selectedMovie, setSelectedMovie ] = useState<MovieType | undefined>()
   const [ error, setError ] = useState()
   const HeaderBackgroundColor = theme === 'light' ? "#60A5FA" : "#1F2937"  
 
